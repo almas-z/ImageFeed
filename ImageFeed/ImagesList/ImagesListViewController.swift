@@ -1,6 +1,6 @@
 import UIKit
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet private var tableView: UITableView!
     
@@ -10,10 +10,10 @@ class ImagesListViewController: UIViewController {
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ru_RU")
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
+        formatter.dateFormat = "d MMMM yyyy"
         return formatter
     }()
+
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -46,7 +46,7 @@ extension ImagesListViewController: UITableViewDataSource {
 
 // MARK: - Cell Configuration
 extension ImagesListViewController {
-    func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
+    private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let image = UIImage(named: photosName[indexPath.row]) else {
             return
         }
