@@ -20,6 +20,7 @@ final class WebViewViewController: UIViewController {
     // MARK: - IBOutlets
     
     @IBOutlet private var webView: WKWebView!
+    
     @IBOutlet private var progressView: UIProgressView!
     
     weak var delegate: WebViewViewControllerDelegate?
@@ -32,8 +33,6 @@ final class WebViewViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor(named: "YP Black")
         loadAuthView()
         webView.navigationDelegate = self
-        updateProgress()
-        
     }
     
     private func loadAuthView() {
@@ -47,13 +46,10 @@ final class WebViewViewController: UIViewController {
             URLQueryItem(name: "scope", value: Constants.accessScope)
         ]
         
-        guard let url = urlComponents.url else {
-            return
+        if let url = urlComponents.url {
+            print("Запрашиваем URL: \(url.absoluteString)")
+            webView.load(URLRequest(url: url))
         }
-        
-        let request = URLRequest(url: url)
-        print("Запрашиваем URL: \(request.url?.absoluteString ?? "nil")")
-        webView.load(request)
     }
     
     override func viewDidAppear(_ animated: Bool) {
